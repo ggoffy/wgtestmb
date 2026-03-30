@@ -95,6 +95,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('form', $form->render());
         break;
     case 'save':
+        $templateMain = 'wgtestmb_admin_testtable1.tpl';
         // Security Check
         if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header('testtable1.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));

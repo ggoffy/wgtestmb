@@ -5,6 +5,7 @@
             <th class='center'><{$smarty.const._MB_WGTESTMB_TT1_NAME}></th>
             <th class='center'><{$smarty.const._MB_WGTESTMB_TT1_DATE}></th>
             <th class='center'><{$smarty.const._MB_WGTESTMB_TT1_COMMENTS}></th>
+            <th>&nbsp;</th>
         </tr>
     </thead>
     <{if $block|count > 0}>

@@ -103,6 +103,7 @@ function b_wgtestmb_testtable1_show($options)
     }
 
     $GLOBALS['xoopsTpl']->assign('wgtestmb_url', \WGTESTMB_URL);
+    $GLOBALS['xoopsTpl']->assign('table_type', $helper->getConfig('table_type'));
 
     return $block;
 
@@ -124,10 +125,6 @@ function b_wgtestmb_testtable1_edit($options)
     \array_shift($options);
     \array_shift($options);
 
-    $crTesttable1 = new \CriteriaCompo();
-    $crTesttable1->add(new \Criteria('tt1_id', 0, '!='));
-    $crTesttable1->setSort('tt1_id');
-    $crTesttable1->setOrder('ASC');
 
     /**
      * If you want to filter your results by e.g. a category used in yourtesttable1
@@ -136,6 +133,10 @@ function b_wgtestmb_testtable1_edit($options)
     /*
     $helper = Helper::getInstance();
     $testtable1Handler = $helper->getHandler('Testtable1');
+    $crTesttable1 = new \CriteriaCompo();
+    $crTesttable1->add(new \Criteria('tt1_id', 0, '!='));
+    $crTesttable1->setSort('tt1_id');
+    $crTesttable1->setOrder('ASC');
     $testtable1All = $testtable1Handler->getAll($crTesttable1);
     unset($crTesttable1);
     $form .= \_MB_WGTESTMB_TESTTABLE1_TO_DISPLAY . "<br><select name='options[]' multiple='multiple' size='5'>";

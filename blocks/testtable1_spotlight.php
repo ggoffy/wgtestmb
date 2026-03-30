@@ -76,6 +76,7 @@ function b_wgtestmb_testtable1_spotlight_show($options)
     }
 
     $GLOBALS['xoopsTpl']->assign('wgtestmb_url', \WGTESTMB_URL);
+    $GLOBALS['xoopsTpl']->assign('table_type', $helper->getConfig('table_type'));
 
     return $block;
 
