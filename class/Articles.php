@@ -46,7 +46,6 @@ class Articles extends \XoopsObject
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
@@ -64,9 +63,8 @@ class Articles extends \XoopsObject
     }
 
     /**
-     * @static function &getInstance
+     * @static function getInstance
      *
-     * @param null
      */
     public static function getInstance()
     {
@@ -74,6 +72,7 @@ class Articles extends \XoopsObject
         if (!$instance) {
             $instance = new self();
         }
+        return $instance;
     }
 
     /**
@@ -251,7 +250,7 @@ class Articles extends \XoopsObject
         $ret = $this->getValues($keys, $format, $maxDepth);
         $editorMaxchar = $helper->getConfig('editor_maxchar');
         $ret['id']              = $this->getVar('art_id');
-        $ret['cat_text']        = (int)$this->getVar('art_cat') > Constants::RADIO_OFFLINE ? \_AM_WGTESTMB_ARTICLES_CAT_ONLINE : \_AM_WGTESTMB_ARTICLES_CAT_OFFLINE;
+        $ret['cat_text']        = (int)$this->getVar('art_cat') > Constants::RADIO_OFFLINE ? \_AM_WGTESTMB_STATUS_ONLINE : \_AM_WGTESTMB_STATUS_OFFLINE;
         $ret['title']           = $this->getVar('art_title');
         $ret['descr_text']      = $this->getVar('art_descr', 'e');
         $ret['descr_short']     = $utility::truncateHtml($ret['descr_text'], $editorMaxchar);

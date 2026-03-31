@@ -57,6 +57,9 @@ function wgtestmbGetMyItemIds($permtype, $dirname)
     }
     $moduleHandler = \xoops_getHandler('module');
     $wgtestmbModule = $moduleHandler->getByDirname($dirname);
+    if (!\is_object($wgtestmbModule)) {
+        return [];
+    }
     $groups = \is_object($xoopsUser) ? $xoopsUser->getGroups() : \XOOPS_GROUP_ANONYMOUS;
     $grouppermHandler = \xoops_getHandler('groupperm');
     $itemIds = $grouppermHandler->getItemIds($permtype, $groups, $wgtestmbModule->getVar('mid'));

@@ -44,8 +44,8 @@ if ($articlesCount > 0) {
     // Get All Articles
     $articles_list = [];
     foreach (\array_keys($articlesAll) as $i) {
-        $article_list[] = $articlesAll[$i]->getValuesArticles();
-        $keywords[] = $articlesAll[$i]->getVar('tt1_name');
+        $articles_list[] = $articlesAll[$i]->getValuesArticles();
+        $keywords[] = $articlesAll[$i]->getVar('art_title');
     }
     $GLOBALS['xoopsTpl']->assign('articles_list', $articles_list);
     unset($articles);
@@ -70,8 +70,8 @@ if ($testfieldsCount > 0) {
     // Get All Testfields
     $testfields_list = [];
     foreach (\array_keys($testfieldsAll) as $i) {
-        $testfield_list[] = $testfieldsAll[$i]->getValuesTestfields();
-        $keywords[] = $testfieldsAll[$i]->getVar('tt1_name');
+        $testfields_list[] = $testfieldsAll[$i]->getValuesTestfields();
+        $keywords[] = $testfieldsAll[$i]->getVar('tf_text');
     }
     $GLOBALS['xoopsTpl']->assign('testfields_list', $testfields_list);
     unset($testfields);

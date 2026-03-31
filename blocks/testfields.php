@@ -49,7 +49,7 @@ function b_wgtestmb_testfields_show($options)
 
     $crTestfields = new \CriteriaCompo();
     // Criteria for status field
-    $crTestfields->add(new \Criteria('tf_status', Constants::PERM_GLOBAL_VIEW, '>'));
+    $crTestfields->add(new \Criteria('tf_status', Constants::STATUS_OFFLINE, '>'));
 
     switch ($typeBlock) {
         case 'last':
@@ -75,7 +75,7 @@ function b_wgtestmb_testfields_show($options)
         case 'top':
             // For the block: testfields top
             $crTestfields->setSort('tf_votes');
-            $crTestfields->setOrder('ASC');
+            $crTestfields->setOrder('DESC');
             break;
         case 'random':
             // For the block: testfields random

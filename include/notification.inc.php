@@ -36,28 +36,38 @@ function wgtestmb_notify_iteminfo($category, $item_id)
         \define('WGTESTMB_URL', \XOOPS_URL . '/modules/wgtestmb');
     }
 
+    $itemId = (int)$item_id;
     switch ($category) {
         case 'global':
             $item['name'] = '';
             $item['url']  = '';
             return $item;
-            break;
         case 'articles':
-            $sql          = 'SELECT art_title FROM ' . $xoopsDB->prefix('wgtestmb_articles') . ' WHERE art_id = '. $item_id;
-            $result       = $xoopsDB->query($sql);
+            $sql    = 'SELECT art_title FROM ' . $xoopsDB->prefix('wgtestmb_articles') . ' WHERE art_id = '. $itemId;
+            $result = $xoopsDB->query($sql);
+            if (!$result) {
+                return [];
+            }
             $result_array = $xoopsDB->fetchArray($result);
+            if (!$result_array) {
+                return [];
+            }
             $item['name'] = $result_array['art_title'];
-            $item['url']  = \WGTESTMB_URL . '/articles.php?art_id=' . $item_id;
+            $item['url']  = \WGTESTMB_URL . '/articles.php?art_id=' . $itemId;
             return $item;
-            break;
         case 'testfields':
-            $sql          = 'SELECT tf_text FROM ' . $xoopsDB->prefix('wgtestmb_testfields') . ' WHERE tf_id = '. $item_id;
-            $result       = $xoopsDB->query($sql);
+            $sql    = 'SELECT tf_text FROM ' . $xoopsDB->prefix('wgtestmb_testfields') . ' WHERE tf_id = '. $itemId;
+            $result = $xoopsDB->query($sql);
+            if (!$result) {
+                return [];
+            }
             $result_array = $xoopsDB->fetchArray($result);
+            if (!$result_array) {
+                return [];
+            }
             $item['name'] = $result_array['tf_text'];
-            $item['url']  = \WGTESTMB_URL . '/testfields.php?tf_id=' . $item_id;
+            $item['url']  = \WGTESTMB_URL . '/testfields.php?tf_id=' . $itemId;
             return $item;
-            break;
     }
     return null;
 }

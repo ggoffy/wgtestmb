@@ -1,14 +1,14 @@
 <i id='artId_<{$article.id|default:false}>'></i>
 <div class='panel-heading'>
-    <h3 class='panel-title'><{$article.cat|default:false}></h3>
-    <h3 class='panel-title'><{$article.title|default:false}></h3>
+    <h3 class='panel-title'><{$article.cat|default:''|escape:'html'}></h3>
+    <h3 class='panel-title'><{$article.title|default:''|escape:'html'}></h3>
 </div>
 <div class='panel-body'>
-    <span class='col-sm-9 justify'><{$article.descr_short|default:false}></span>
+    <span class='col-sm-9 justify'><{$article.descr_short|default:''|escape:'html'}></span>
     <span class='col-sm-9 justify'><img src='<{$wgtestmb_upload_url|default:false}>/images/articles/<{$article.img|default:false}>' alt='articles' ></span>
 </div>
 <div class='panel-foot'>
-    <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_ARTICLE_FILE}>: <{$article.file|default:false}></span>
+    <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_ARTICLE_FILE}>: <{$article.file|default:''|escape:'html'}></span>
     <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_ARTICLE_CREATED}>: <{$article.created_text|default:false}></span>
     <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_ARTICLE_SUBMITTER}>: <{$article.submitter_text|default:false}></span>
     <div class='col-sm-12 right'>

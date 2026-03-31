@@ -36,7 +36,7 @@ switch ($op) {
         break;
     case 'save':
         // Security Check
-        if ($GLOBALS['xoopsSecurity']->check()) {
+        if (!$GLOBALS['xoopsSecurity']->check()) {
             \redirect_header('index.php', 3, \implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $rating = Request::getInt('rating');

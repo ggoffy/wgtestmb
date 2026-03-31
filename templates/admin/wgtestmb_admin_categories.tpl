@@ -18,7 +18,7 @@
             <{foreach item=category from=$categories_list}>
             <tr class='<{cycle values='odd, even'}>'>
                 <td class='center'><{$category.id|default:false}></td>
-                <td class='center'><{$category.name|default:false}></td>
+                <td class='center'><{$category.name|default:''|escape:'html'}></td>
                 <td class='center'><img src="<{$wgtestmb_upload_url|default:false}>/images/categories/<{$category.logo|default:false}>" alt="categories" style="max-width:100px" ></td>
                 <td class='center'><{$category.created_text|default:false}></td>
                 <td class='center'><{$category.submitter_text|default:false}></td>

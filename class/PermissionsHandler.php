@@ -35,10 +35,9 @@ class PermissionsHandler extends \XoopsPersistableObjectHandler
 {
     /**
      * Constructor
-     *
-     * @param null
+     * @param \XoopsDatabase $db
      */
-    public function __construct()
+    public function __construct(\XoopsDatabase $db)
     {
     }
 
@@ -46,7 +45,6 @@ class PermissionsHandler extends \XoopsPersistableObjectHandler
      * @public function permGlobalApprove
      * returns right for global approve
      *
-     * @param null
      * @return bool
      */
     public function getPermGlobalApprove()
@@ -77,7 +75,6 @@ class PermissionsHandler extends \XoopsPersistableObjectHandler
      * @public function permGlobalSubmit
      * returns right for global submit
      *
-     * @param null
      * @return bool
      */
     public function getPermGlobalSubmit()
@@ -111,7 +108,6 @@ class PermissionsHandler extends \XoopsPersistableObjectHandler
      * @public function permGlobalView
      * returns right for global view
      *
-     * @param null
      * @return bool
      */
     public function getPermGlobalView()

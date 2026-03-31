@@ -41,33 +41,33 @@
             <{foreach item=testfield from=$testfields_list}>
             <tr class='<{cycle values='odd, even'}>'>
                 <td class='center'><{$testfield.id|default:false}></td>
-                <td class='center'><{$testfield.text|default:false}></td>
+                <td class='center'><{$testfield.text|default:''|escape:'html'}></td>
                 <td class='center'><{$testfield.textarea_short|default:false}></td>
                 <td class='center'><{$testfield.dhtml_short|default:false}></td>
                 <td class='center'><img src="<{xoModuleIcons16}><{$testfield.checkbox|default:false}>.png" alt="testfields" ></td>
                 <td class='center'><{$testfield.yesno_text|default:false}></td>
-                <td class='center'><{$testfield.selectbox|default:false}></td>
+                <td class='center'><{$testfield.selectbox|default:''|escape:'html'}></td>
                 <td class='center'><{$testfield.user_text|default:false}></td>
                 <td class='center'><span style='background-color:<{$testfield.color|default:false}>;'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
                 <td class='center'><img src="<{xoModuleIcons32}><{$testfield.imagelist|default:false}>" alt="testfields" ></td>
-                <td class='center'><{$testfield.urlfile|default:false}></td>
+                <td class='center'><{$testfield.urlfile|default:''|escape:'html'}></td>
                 <td class='center'><img src="<{$wgtestmb_upload_url|default:false}>/images/testfields/<{$testfield.uplimage|default:false}>" alt="testfields" style="max-width:100px" ></td>
-                <td class='center'><{$testfield.uplfile|default:false}></td>
+                <td class='center'><{$testfield.uplfile|default:''|escape:'html'}></td>
                 <td class='center'><{$testfield.textdateselect_text|default:false}></td>
-                <td class='center'><{$testfield.selectfile|default:false}></td>
-                <td class='center'><{$testfield.password|default:false}></td>
-                <td class='center'><{$testfield.country_list|default:false}></td>
-                <td class='center'><{$testfield.language|default:false}></td>
-                <td class='center'><{$testfield.radio|default:false}></td>
+                <td class='center'><{$testfield.selectfile|default:''|escape:'html'}></td>
+                <td class='center'><{$testfield.password|default:''|escape:'html'}></td>
+                <td class='center'><{$testfield.country_list|default:''|escape:'html'}></td>
+                <td class='center'><{$testfield.language|default:''|escape:'html'}></td>
+                <td class='center'><{$testfield.radio|default:''|escape:'html'}></td>
                 <td class='center'><img src="<{$modPathIcon16}>status<{$testfield.status|default:false}>.png" alt="<{$testfield.status_text|default:false}>" title="<{$testfield.status_text|default:false}>" ></td>
                 <td class='center'><{$testfield.datetime_text|default:false}></td>
-                <td class='center'><{$testfield.combobox|default:false}></td>
-                <td class='center'><{$testfield.comments|default:false}></td>
-                <td class='center'><{$testfield.ratings|default:false}></td>
-                <td class='center'><{$testfield.votes|default:false}></td>
-                <td class='center'><{$testfield.uuid|default:false}></td>
-                <td class='center'><{$testfield.ip|default:false}></td>
-                <td class='center'><{$testfield.reads|default:false}></td>
+                <td class='center'><{$testfield.combobox|default:''|escape:'html'}></td>
+                <td class='center'><{$testfield.comments|default:''|escape:'html'}></td>
+                <td class='center'><{$testfield.ratings|default:''|escape:'html'}></td>
+                <td class='center'><{$testfield.votes|default:''|escape:'html'}></td>
+                <td class='center'><{$testfield.uuid|default:''|escape:'html'}></td>
+                <td class='center'><{$testfield.ip|default:''|escape:'html'}></td>
+                <td class='center'><{$testfield.reads|default:''|escape:'html'}></td>
                 <td class="center  width5">
                     <a href="testfields.php?op=edit&amp;tf_id=<{$testfield.id|default:false}>&amp;start=<{$start|default:0}>&amp;limit=<{$limit|default:0}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 'edit.png'}>" alt="<{$smarty.const._EDIT}> testfields" ></a>
                     <a href="testfields.php?op=clone&amp;tf_id_source=<{$testfield.id|default:false}>" title="<{$smarty.const._CLONE}>"><img src="<{xoModuleIcons16 'editcopy.png'}>" alt="<{$smarty.const._CLONE}> testfields" ></a>

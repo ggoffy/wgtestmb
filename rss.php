@@ -58,11 +58,11 @@ if (!$tpl->is_cached('db:wgtestmb_rss.tpl', $tt1_comments)) {
     $tpl->assign('channel_title', \htmlspecialchars($title, ENT_QUOTES));
     $tpl->assign('channel_link', \XOOPS_URL.'/');
     $tpl->assign('channel_desc', \htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES));
-    $tpl->assign('channel_lastbuild', \formatTimestamp(    ime(), 'rss'));
+    $tpl->assign('channel_lastbuild', \formatTimestamp(\time(), 'rss'));
     $tpl->assign('channel_webmaster', $xoopsConfig['adminmail']);
     $tpl->assign('channel_editor', $xoopsConfig['adminmail']);
     $tpl->assign('channel_category', 'Event');
-    $tpl->assign('channel_generator', 'XOOPS - ' . \htmlspecialchars($xoopsModule->getVar('tt1_comments'), ENT_QUOTES));
+    $tpl->assign('channel_generator', 'XOOPS - ' . \htmlspecialchars($xoopsModule->getVar('name'), ENT_QUOTES));
     $tpl->assign('channel_language', _LANGCODE);
     if ( 'fr' == _LANGCODE ) {
         $tpl->assign('docs', 'https://www.scriptol.fr/rss/RSS-2.0.html');

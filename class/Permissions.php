@@ -36,16 +36,14 @@ class Permissions extends \XoopsObject
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
     }
 
     /**
-     * @static function &getInstance
+     * @static function getInstance
      *
-     * @param null
      */
     public static function getInstance()
     {

@@ -263,6 +263,13 @@ switch ($op) {
         $testfieldsObj->setVar('tf_status', Request::getInt('tf_status'));
         $testfieldDatetimeArr = Request::getArray('tf_datetime');
         $testfieldDatetimeObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $testfieldDatetimeArr['date']);
+        if (false === $testfieldDatetimeObj) {
+            // Get Form
+            $GLOBALS['xoopsTpl']->assign('error', INVALID_DATE);
+            $form = $testfieldsObj->getFormTestfields();
+            $GLOBALS['xoopsTpl']->assign('form', $form->render());
+            break;
+        }
         $testfieldDatetimeObj->setTime(0, 0, 0);
         $testfieldDatetime = $testfieldDatetimeObj->getTimestamp() + (int)$testfieldDatetimeArr['time'];
         $testfieldsObj->setVar('tf_datetime', $testfieldDatetime);
@@ -275,8 +282,8 @@ switch ($op) {
         $testfieldsObj->setVar('tf_reads', Request::getInt('tf_reads'));
         // Insert Data
         if ($testfieldsHandler->insert($testfieldsObj)) {
-            $newTfId = $testfieldsObj->getNewInsertedIdTestfields();
-            $permId = isset($_REQUEST['tf_id']) ? $tfId : $newTfId;
+            $savedTfId = $tfId > 0 ? $tfId : $testfieldsObj->getNewInsertedIdTestfields();
+            $permId = $savedTfId;
             $grouppermHandler = \xoops_getHandler('groupperm');
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
             // Permission to view_testfields
@@ -301,7 +308,7 @@ switch ($op) {
                 }
             }
             if ('' !== $uploaderErrors) {
-                \redirect_header('testfields.php?op=edit&tf_id=' . $tfId, 5, $uploaderErrors);
+                \redirect_header('testfields.php?op=edit&tf_id=' . $savedTfId, 5, $uploaderErrors);
             } else {
                 \redirect_header('testfields.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_AM_WGTESTMB_FORM_OK);
             }

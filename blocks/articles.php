@@ -49,7 +49,7 @@ function b_wgtestmb_articles_show($options)
 
     $crArticles = new \CriteriaCompo();
     // Criteria for status field
-    $crArticles->add(new \Criteria('art_status', Constants::PERM_GLOBAL_VIEW, '>'));
+    $crArticles->add(new \Criteria('art_status', Constants::STATUS_OFFLINE, '>'));
 
     switch ($typeBlock) {
         case 'last':
@@ -75,7 +75,7 @@ function b_wgtestmb_articles_show($options)
         case 'top':
             // For the block: articles top
             $crArticles->setSort('art_votes');
-            $crArticles->setOrder('ASC');
+            $crArticles->setOrder('DESC');
             break;
         case 'random':
             // For the block: articles random
@@ -107,7 +107,7 @@ function b_wgtestmb_articles_show($options)
             $block[$i]['img'] = $articlesAll[$i]->getVar('art_img');
             $block[$i]['file'] = $articlesAll[$i]->getVar('art_file');
             $block[$i]['created_text'] = \formatTimestamp($articlesAll[$i]->getVar('art_created'));
-            $block[$i]['submitter'] = \XoopsUser::getUnameFromId($articlesAll[$i]->getVar('art_submitter'));
+            $block[$i]['submitter_text'] = \XoopsUser::getUnameFromId($articlesAll[$i]->getVar('art_submitter'));
         }
     }
 

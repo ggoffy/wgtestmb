@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title><{$channel_title}></title>
-    <link><{$channel_link}></link>
-    <description><{$channel_desc}></description>
+    <title><{$channel_title|escape:'html':'UTF-8'}></title>
+    <link><{$channel_link|escape:'html':'UTF-8'}></link>
+    <description><{$channel_desc|escape:'html':'UTF-8'}></description>
     <lastBuildDate><{$channel_lastbuild}></lastBuildDate>
     <docs>https://backend.userland.com/rss/</docs>
     <generator><{$channel_generator}></generator>
@@ -13,18 +13,18 @@
     <language><{$channel_language}></language>
     <{if $image_url != ""}>
     <image>
-      <title><{$channel_title}></title>
+      <title><{$channel_title|escape:'html':'UTF-8'}></title>
       <url><{$image_url}></url>
-      <link><{$channel_link}></link>
+      <link><{$channel_link|escape:'html':'UTF-8'}></link>
       <width><{$image_width}></width>
       <height><{$image_height}></height>
     </image>
     <{/if}>
     <{foreach item=item from=$items}>
     <item>
-      <title><{$item.title}></title>
-      <link><{$item.link}></link>
-      <description><{$item.description}></description>
+      <title><{$item.title|escape:'html':'UTF-8'}></title>
+      <link><{$item.link|escape:'html':'UTF-8'}></link>
+      <description><{$item.description|escape:'html':'UTF-8'}></description>
       <pubDate><{$item.pubdate}></pubDate>
       <guid><{$item.guid}></guid>
     </item>

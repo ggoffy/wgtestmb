@@ -32,11 +32,14 @@ function wgtestmbCommentsUpdate($itemId, $itemNumb)
 {
     // Get instance of module
     $helper = \XoopsModules\Wgtestmb\Helper::getInstance();
-    $testtable1Handler = $helper->getHandler('Testtable1');
-    $tt1Id = (int)$itemId;
-    $testtable1Obj = $testtable1Handler->get($tt1Id);
-    $testtable1Obj->setVar('tt1_comments', (int)$itemNumb);
-    if ($testtable1Handler->insert($testtable1Obj)) {
+    $testfieldsHandler = $helper->getHandler('Testfields');
+    $tfId = (int)$itemId;
+    $testfieldsObj = $testfieldsHandler->get($tfId);
+    if (!\is_object($testfieldsObj)) {
+        \redirect_header('testfields.php', 3, \_MA_WGTESTMB_INVALID_PARAM);
+    }
+    $testfieldsObj->setVar('tf_comments', (int)$itemNumb);
+    if ($testfieldsHandler->insert($testfieldsObj)) {
         return true;
     }
     return false;
@@ -53,18 +56,21 @@ function wgtestmbCommentsApprove($comment)
     // Notification event
     // Get instance of module
     $helper = \XoopsModules\Wgtestmb\Helper::getInstance();
-    $testtable1Handler = $helper->getHandler('Testtable1');
-    $tt1Id = $comment->getVar('com_itemid');
-    $testtable1Obj = $testtable1Handler->get($tt1Id);
-    $tt1Name = $testtable1Obj->getVar('tt1_name');
+    $testfieldsHandler = $helper->getHandler('Testfields');
+    $tfId = (int)$comment->getVar('com_itemid');
+    $testfieldsObj = $testfieldsHandler->get($tfId);
+    if (!\is_object($testfieldsObj)) {
+        \redirect_header('testfields.php', 3, \_MA_WGTESTMB_INVALID_PARAM);
+    }
+    $tfText = $testfieldsObj->getVar('tf_text');
 
     $tags = [];
-    $tags['ITEM_NAME'] = $tt1Name;
-    $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgtestmb/testtable1.php?op=show&tt1_id=' . $tt1Id;
+    $tags['ITEM_NAME'] = $tfText;
+    $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgtestmb/testfields.php?op=show&tf_id=' . $tfId;
     $notificationHandler = \xoops_getHandler('notification');
     // Event modify notification
     $notificationHandler->triggerEvent('global', 0, 'global_comment', $tags);
-    $notificationHandler->triggerEvent('testtable1', $tt1Id, 'testtable1_comment', $tags);
+    $notificationHandler->triggerEvent('testfields', $tfId, 'testfield_comment', $tags);
     return true;
 
 }

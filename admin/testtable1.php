@@ -126,6 +126,7 @@ switch ($op) {
         $testtable1Obj->setVar('tt1_comments', Request::getInt('tt1_comments'));
         // Insert Data
         if ($testtable1Handler->insert($testtable1Obj)) {
+            $savedTt1Id = $tt1Id > 0 ? $tt1Id : $testtable1Obj->getNewInsertedIdTesttable1();
                 \redirect_header('testtable1.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_AM_WGTESTMB_FORM_OK);
         }
         // Get Form

@@ -84,7 +84,8 @@ switch ($op) {
                 $testfieldsList[$i] = $testfieldsAll[$i]->getValuesTestfields();
                 $tfText = $testfieldsAll[$i]->getVar('tf_text');
                 $keywords[$i] = $tfText;
-                $testfields[$i]['rating'] = $ratingsHandler->getItemRating($testfieldsAll[$i]->getVar('tf_id'), Constants::TABLE_TESTFIELDS);
+                $testfieldsList[$i]['rating'] = $ratingsHandler->getItemRating($testfieldsAll[$i]->getVar('tf_id'), Constants::TABLE_TESTFIELDS);
+                $testfieldsList[$i]['rating_source'] = Constants::TABLE_TESTFIELDS;
             }
             $GLOBALS['xoopsTpl']->assign('testfields_list', $testfieldsList);
             unset($testfieldsList);
@@ -278,6 +279,13 @@ switch ($op) {
         $testfieldsObj->setVar('tf_status', Request::getInt('tf_status'));
         $testfieldDatetimeArr = Request::getArray('tf_datetime');
         $testfieldDatetimeObj = \DateTime::createFromFormat(\_SHORTDATESTRING, $testfieldDatetimeArr['date']);
+        if (false === $testfieldDatetimeObj) {
+            // Get Form
+            $GLOBALS['xoopsTpl']->assign('error', INVALID_DATE);
+            $form = $testfieldsObj->getFormTestfields();
+            $GLOBALS['xoopsTpl']->assign('form', $form->render());
+            break;
+        }
         $testfieldDatetimeObj->setTime(0, 0, 0);
         $testfieldDatetime = $testfieldDatetimeObj->getTimestamp() + (int)$testfieldDatetimeArr['time'];
         $testfieldsObj->setVar('tf_datetime', $testfieldDatetime);
@@ -319,7 +327,7 @@ switch ($op) {
             $tfStatus = $testfieldsObj->getVar('tf_status');
             $tags = [];
             $tags['ITEM_NAME'] = $tfText;
-            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgtestmb/testfields.php?op=show&tf_id=' . $tfId;
+            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgtestmb/testfields.php?op=show&tf_id=' . $newTfId;
             $notificationHandler = \xoops_getHandler('notification');
             if (Constants::STATUS_SUBMITTED == $tfStatus) {
                 // Event approve notification
@@ -450,6 +458,9 @@ switch ($op) {
             \redirect_header('testfields.php?op=list', 3, \_MA_WGTESTMB_INVALID_PARAM);
         }
         $testfieldsObj = $testfieldsHandler->get($tfId);
+        if (!\is_object($testfieldsObj)) {
+            \redirect_header('testfields.php', 3, \_MA_WGTESTMB_INVALID_PARAM);
+        }
         $tfText = $testfieldsObj->getVar('tf_text');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {

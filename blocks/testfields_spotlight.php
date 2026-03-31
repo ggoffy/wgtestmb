@@ -39,6 +39,8 @@ function b_wgtestmb_testfields_spotlight_show($options)
     $limit       = $options[1];
 //    $lenghtTitle   = $options[2];
     $helper      = Helper::getInstance();
+    $utility       = new \XoopsModules\Wgtestmb\Utility();
+    $editorMaxchar = $helper->getConfig('editor_maxchar');
     $testfieldsHandler = $helper->getHandler('Testfields');
     $crTestfields = new \CriteriaCompo();
     \array_shift($options);
@@ -46,7 +48,7 @@ function b_wgtestmb_testfields_spotlight_show($options)
     \array_shift($options);
 
     // Criteria for status field
-    $crTestfields->add(new \Criteria('tf_status', Constants::PERM_GLOBAL_VIEW, '>'));
+    $crTestfields->add(new \Criteria('tf_status', Constants::STATUS_OFFLINE, '>'));
 
     if (\count($options) > 0 && (int)$options[0] > 0) {
         $crTestfields->add(new \Criteria('tf_id', '(' . \implode(',', $options) . ')', 'IN'));

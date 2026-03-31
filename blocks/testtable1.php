@@ -71,7 +71,7 @@ function b_wgtestmb_testtable1_show($options)
             // For the block: testtable1 top
             // Table testtable1 must have tt1_top or you have to change into corresponding field name
             $crTesttable1->setSort('tt1_top');
-            $crTesttable1->setOrder('ASC');
+            $crTesttable1->setOrder('DESC');
             break;
         case 'random':
             // For the block: testtable1 random

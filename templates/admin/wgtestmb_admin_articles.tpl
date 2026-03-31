@@ -25,13 +25,13 @@
             <tr class='<{cycle values='odd, even'}>'>
                 <td class='center'><{$article.id|default:false}></td>
                 <td class='center'><{$article.cat_text|default:false}></td>
-                <td class='center'><{$article.title|default:false}></td>
+                <td class='center'><{$article.title|default:''|escape:'html'}></td>
                 <td class='center'><{$article.descr_short|default:false}></td>
                 <td class='center'><img src="<{$wgtestmb_upload_url|default:false}>/images/articles/<{$article.img|default:false}>" alt="articles" style="max-width:100px" ></td>
                 <td class='center'><img src="<{$modPathIcon16}>status<{$article.status|default:false}>.png" alt="<{$article.status_text|default:false}>" title="<{$article.status_text|default:false}>" ></td>
-                <td class='center'><{$article.file|default:false}></td>
-                <td class='center'><{$article.ratings|default:false}></td>
-                <td class='center'><{$article.votes|default:false}></td>
+                <td class='center'><{$article.file|default:''|escape:'html'}></td>
+                <td class='center'><{$article.ratings|default:''|escape:'html'}></td>
+                <td class='center'><{$article.votes|default:''|escape:'html'}></td>
                 <td class='center'><{$article.created_text|default:false}></td>
                 <td class='center'><{$article.submitter_text|default:false}></td>
                 <td class="center  width5">

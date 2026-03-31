@@ -39,6 +39,8 @@ function b_wgtestmb_articles_spotlight_show($options)
     $limit       = $options[1];
 //    $lenghtTitle   = $options[2];
     $helper      = Helper::getInstance();
+    $utility       = new \XoopsModules\Wgtestmb\Utility();
+    $editorMaxchar = $helper->getConfig('editor_maxchar');
     $articlesHandler = $helper->getHandler('Articles');
     $crArticles = new \CriteriaCompo();
     \array_shift($options);
@@ -46,7 +48,7 @@ function b_wgtestmb_articles_spotlight_show($options)
     \array_shift($options);
 
     // Criteria for status field
-    $crArticles->add(new \Criteria('art_status', Constants::PERM_GLOBAL_VIEW, '>'));
+    $crArticles->add(new \Criteria('art_status', Constants::STATUS_OFFLINE, '>'));
 
     if (\count($options) > 0 && (int)$options[0] > 0) {
         $crArticles->add(new \Criteria('art_id', '(' . \implode(',', $options) . ')', 'IN'));
@@ -74,11 +76,12 @@ function b_wgtestmb_articles_spotlight_show($options)
             $block[$i]['id'] = $articlesAll[$i]->getVar('art_id');
             $block[$i]['cat'] = $articlesAll[$i]->getVar('art_cat');
             $block[$i]['title'] = \htmlspecialchars($articlesAll[$i]->getVar('art_title'), ENT_QUOTES | ENT_HTML5);
-            $block[$i]['descr'] = \strip_tags($articlesAll[$i]->getVar('art_descr'));
+            $block[$i]['descr_text'] = $articlesAll[$i]->getVar('art_descr', 'e');
+            $block[$i]['descr_short'] = $utility::truncateHtml($articlesAll[$i]->getVar('art_descr', 'e'), $editorMaxchar);
             $block[$i]['img'] = $articlesAll[$i]->getVar('art_img');
             $block[$i]['file'] = $articlesAll[$i]->getVar('art_file');
             $block[$i]['created_text'] = \formatTimestamp($articlesAll[$i]->getVar('art_created'));
-            $block[$i]['submitter'] = \XoopsUser::getUnameFromId($articlesAll[$i]->getVar('art_submitter'));
+            $block[$i]['submitter_text'] = \XoopsUser::getUnameFromId($articlesAll[$i]->getVar('art_submitter'));
         }
     }
 

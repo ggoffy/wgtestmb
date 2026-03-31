@@ -46,7 +46,6 @@ class Testfields extends \XoopsObject
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
@@ -81,9 +80,8 @@ class Testfields extends \XoopsObject
     }
 
     /**
-     * @static function &getInstance
+     * @static function getInstance
      *
-     * @param null
      */
     public static function getInstance()
     {
@@ -91,6 +89,7 @@ class Testfields extends \XoopsObject
         if (!$instance) {
             $instance = new self();
         }
+        return $instance;
     }
 
     /**

@@ -2,31 +2,31 @@
 <div class='panel-heading'>
 </div>
 <div class='panel-body'>
-    <span class='col-sm-9 justify'><{$testfield.text|default:false}></span>
-    <span class='col-sm-9 justify'><{$testfield.textarea_short|default:false}></span>
-    <span class='col-sm-9 justify'><{$testfield.dhtml_short|default:false}></span>
-    <span class='col-sm-9 justify'><{$testfield.checkbox|default:false}></span>
+    <span class='col-sm-9 justify'><{$testfield.text|default:''|escape:'html'}></span>
+    <span class='col-sm-9 justify'><{$testfield.textarea_short|default:''|escape:'html'}></span>
+    <span class='col-sm-9 justify'><{$testfield.dhtml_short|default:''|escape:'html'}></span>
+    <span class='col-sm-9 justify'><{$testfield.checkbox|default:''|escape:'html'}></span>
     <span class='col-sm-9 justify'><{$testfield.yesno_text|default:false}></span>
-    <span class='col-sm-9 justify'><{$testfield.selectbox|default:false}></span>
+    <span class='col-sm-9 justify'><{$testfield.selectbox|default:''|escape:'html'}></span>
     <span class='col-sm-9 justify'><{$testfield.user_text|default:false}></span>
-    <span class='col-sm-9 justify'><{$testfield.color|default:false}></span>
+    <span class='col-sm-9 justify'><{$testfield.color|default:''|escape:'html'}></span>
     <span class='col-sm-9 justify'><img src='<{$xoops_icons32_url|default:false}>/<{$testfield.imagelist|default:false}>' alt='testfields' ></span>
-    <span class='col-sm-9 justify'><{$testfield.urlfile|default:false}></span>
+    <span class='col-sm-9 justify'><{$testfield.urlfile|default:''|escape:'html'}></span>
     <span class='col-sm-9 justify'><img src='<{$wgtestmb_upload_url|default:false}>/images/testfields/<{$testfield.uplimage|default:false}>' alt='testfields' ></span>
-    <span class='col-sm-9 justify'><{$testfield.uplfile|default:false}></span>
+    <span class='col-sm-9 justify'><{$testfield.uplfile|default:''|escape:'html'}></span>
     <span class='col-sm-9 justify'><{$testfield.textdateselect_text|default:false}></span>
-    <span class='col-sm-9 justify'><{$testfield.selectfile|default:false}></span>
-    <span class='col-sm-9 justify'><{$testfield.country_list|default:false}></span>
-    <span class='col-sm-9 justify'><{$testfield.radio|default:false}></span>
+    <span class='col-sm-9 justify'><{$testfield.selectfile|default:''|escape:'html'}></span>
+    <span class='col-sm-9 justify'><{$testfield.country_list|default:''|escape:'html'}></span>
+    <span class='col-sm-9 justify'><{$testfield.radio|default:''|escape:'html'}></span>
     <span class='col-sm-9 justify'><{$testfield.status_text|default:false}></span>
     <span class='col-sm-9 justify'><{$testfield.datetime_text|default:false}></span>
-    <span class='col-sm-9 justify'><{$testfield.combobox|default:false}></span>
-    <span class='col-sm-9 justify'><{$testfield.ratings|default:false}></span>
+    <span class='col-sm-9 justify'><{$testfield.combobox|default:''|escape:'html'}></span>
+    <span class='col-sm-9 justify'><{$testfield.ratings|default:''|escape:'html'}></span>
 </div>
 <div class='panel-foot'>
-    <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_TESTFIELD_COMMENTS}>: <{$testfield.comments|default:false}></span>
-    <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_TESTFIELD_IP}>: <{$testfield.ip|default:false}></span>
-    <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_TESTFIELD_READS}>: <{$testfield.reads|default:false}></span>
+    <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_TESTFIELD_COMMENTS}>: <{$testfield.comments|default:''|escape:'html'}></span>
+    <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_TESTFIELD_IP}>: <{$testfield.ip|default:''|escape:'html'}></span>
+    <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_TESTFIELD_READS}>: <{$testfield.reads|default:''|escape:'html'}></span>
     <div class='col-sm-12 right'>
         <{if $showItem|default:false}>
             <a class='btn btn-success right' href='testfields.php?op=list&amp;start=<{$start|default:0}>&amp;limit=<{$limit|default:0}>#tfId_<{$testfield.id|default:false}>' title='<{$smarty.const._MA_WGTESTMB_TESTFIELDS_LIST}>'><{$smarty.const._MA_WGTESTMB_TESTFIELDS_LIST}></a>

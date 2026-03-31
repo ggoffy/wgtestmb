@@ -46,7 +46,6 @@ class Categories extends \XoopsObject
     /**
      * Constructor
      *
-     * @param null
      */
     public function __construct()
     {
@@ -58,9 +57,8 @@ class Categories extends \XoopsObject
     }
 
     /**
-     * @static function &getInstance
+     * @static function getInstance
      *
-     * @param null
      */
     public static function getInstance()
     {
@@ -68,6 +66,7 @@ class Categories extends \XoopsObject
         if (!$instance) {
             $instance = new self();
         }
+        return $instance;
     }
 
     /**

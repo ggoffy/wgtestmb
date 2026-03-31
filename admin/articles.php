@@ -191,8 +191,8 @@ switch ($op) {
         $articlesObj->setVar('art_submitter', Request::getInt('art_submitter'));
         // Insert Data
         if ($articlesHandler->insert($articlesObj)) {
-            $newArtId = $articlesObj->getNewInsertedIdArticles();
-            $permId = isset($_REQUEST['art_id']) ? $artId : $newArtId;
+            $savedArtId = $artId > 0 ? $artId : $articlesObj->getNewInsertedIdArticles();
+            $permId = $savedArtId;
             $grouppermHandler = \xoops_getHandler('groupperm');
             $mid = $GLOBALS['xoopsModule']->getVar('mid');
             // Permission to view_articles
@@ -217,7 +217,7 @@ switch ($op) {
                 }
             }
             if ('' !== $uploaderErrors) {
-                \redirect_header('articles.php?op=edit&art_id=' . $artId, 5, $uploaderErrors);
+                \redirect_header('articles.php?op=edit&art_id=' . $savedArtId, 5, $uploaderErrors);
             } else {
                 \redirect_header('articles.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_AM_WGTESTMB_FORM_OK);
             }

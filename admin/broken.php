@@ -55,7 +55,7 @@ if ($articlesCount > 0) {
     if ($articlesCount > $limit) {
         require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
         $pagenav = new \XoopsPageNav($articlesCount, $limit, $start, 'startArticles', 'op=list&limitArticles=' . $limit);
-        $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
+        $GLOBALS['xoopsTpl']->assign('pagenav_articles', $pagenav->renderNav());
     }
 } else {
     $GLOBALS['xoopsTpl']->assign('nodataArticles', \sprintf(\_AM_WGTESTMB_BROKEN_NODATA, 'Articles'));
@@ -85,7 +85,7 @@ if ($testfieldsCount > 0) {
     if ($testfieldsCount > $limit) {
         require_once \XOOPS_ROOT_PATH . '/class/pagenav.php';
         $pagenav = new \XoopsPageNav($testfieldsCount, $limit, $start, 'startTestfields', 'op=list&limitTestfields=' . $limit);
-        $GLOBALS['xoopsTpl']->assign('pagenav', $pagenav->renderNav());
+        $GLOBALS['xoopsTpl']->assign('pagenav_testfields', $pagenav->renderNav());
     }
 } else {
     $GLOBALS['xoopsTpl']->assign('nodataTestfields', \sprintf(\_AM_WGTESTMB_BROKEN_NODATA, 'Testfields'));

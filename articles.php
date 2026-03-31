@@ -84,7 +84,8 @@ switch ($op) {
                 $articlesList[$i] = $articlesAll[$i]->getValuesArticles();
                 $artTitle = $articlesAll[$i]->getVar('art_title');
                 $keywords[$i] = $artTitle;
-                $articles[$i]['rating'] = $ratingsHandler->getItemRating($articlesAll[$i]->getVar('art_id'), Constants::TABLE_ARTICLES);
+                $articlesList[$i]['rating'] = $ratingsHandler->getItemRating($articlesAll[$i]->getVar('art_id'), Constants::TABLE_ARTICLES);
+                $articlesList[$i]['rating_source'] = Constants::TABLE_ARTICLES;
             }
             $GLOBALS['xoopsTpl']->assign('articles_list', $articlesList);
             unset($articlesList);
@@ -228,7 +229,7 @@ switch ($op) {
             $artStatus = $articlesObj->getVar('art_status');
             $tags = [];
             $tags['ITEM_NAME'] = $artTitle;
-            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgtestmb/articles.php?op=show&art_id=' . $artId;
+            $tags['ITEM_URL']  = \XOOPS_URL . '/modules/wgtestmb/articles.php?op=show&art_id=' . $newArtId;
             $notificationHandler = \xoops_getHandler('notification');
             if (Constants::STATUS_SUBMITTED == $artStatus) {
                 // Event approve notification
@@ -359,6 +360,9 @@ switch ($op) {
             \redirect_header('articles.php?op=list', 3, \_MA_WGTESTMB_INVALID_PARAM);
         }
         $articlesObj = $articlesHandler->get($artId);
+        if (!\is_object($articlesObj)) {
+            \redirect_header('articles.php', 3, \_MA_WGTESTMB_INVALID_PARAM);
+        }
         $artTitle = $articlesObj->getVar('art_title');
         if (isset($_REQUEST['ok']) && 1 == $_REQUEST['ok']) {
             if (!$GLOBALS['xoopsSecurity']->check()) {

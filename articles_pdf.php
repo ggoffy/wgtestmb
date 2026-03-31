@@ -27,7 +27,8 @@ use XoopsModules\Wgtestmb\Constants;
 
 require __DIR__ . '/header.php';
 require_once \XOOPS_ROOT_PATH . '/header.php';
-if (\file_exists($tcpdf = \XOOPS_ROOT_PATH.'/Frameworks/tcpdf/')) {
+$tcpdf = \XOOPS_ROOT_PATH.'/Frameworks/tcpdf/';
+if (\file_exists($tcpdf . 'tcpdf.php')) {
     require_once $tcpdf . 'tcpdf.php';
 } else {
     \redirect_header('articles.php', 2, \_MA_WGTESTMB_NO_PDF_LIBRARY);
@@ -42,6 +43,9 @@ $artId = Request::getInt('art_id');
 // Get Instance of Handler
 $articlesHandler = $helper->getHandler('Articles');
 $articlesObj = $articlesHandler->get($artId);
+if (!\is_object($articlesObj)) {
+    \redirect_header('articles.php', 3, \_MA_WGTESTMB_INVALID_PARAM);
+}
 
 $myts = MyTextSanitizer::getInstance();
 
@@ -54,7 +58,7 @@ $content     = '';
 // Read data from table and create pdfData
 $pdfData['title']    = \strip_tags($articlesObj->getVar('art_title'));
 $pdfData['subject']    = \strip_tags($articlesObj->getVar('art_title'));
-$content = \strip_tags($articlesObj->getVar('art_descr'));
+$content .= \strip_tags($articlesObj->getVar('art_descr'));
 $pdfData['date']     = \formatTimestamp($articlesObj->getVar('art_created'), 's');
 $pdfData['author']   = \XoopsUser::getUnameFromId($articlesObj->getVar('art_submitter'));
 $pdfData['title']    = \strip_tags($myts->undoHtmlSpecialChars($title));
@@ -104,11 +108,11 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //set image scale factor
 if ('cn' == _LANGCODE) {
     $pdf->setHeaderFont(['gbsn00lp', '', $pdfData['fontsize']]);
     $pdf->SetFont('gbsn00lp', '', $pdfData['fontsize']);
-    $pdf->setFooterFont('gbsn00lp', '', $pdfData['fontsize']]);
+    $pdf->setFooterFont(['gbsn00lp', '', $pdfData['fontsize']]);
 } else {
-    $pdf->setHeaderFont(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN);
+    $pdf->setHeaderFont([PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN]);
     $pdf->SetFont($pdfData['fontname'], '', $pdfData['fontsize']);
-    $pdf->setFooterFont([PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA);
+    $pdf->setFooterFont([PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA]);
 }
 // Set some language-dependent strings (optional)
 $lang = \XOOPS_ROOT_PATH.'/Frameworks/tcpdf/lang/eng.php';

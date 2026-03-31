@@ -25,8 +25,8 @@
         </tbody>
     </table>
     <div class='clear'>&nbsp;</div>
-    <{if $pagenav|default:''}>
-        <div class='xo-pagenav floatright'><{$pagenav|default:false}></div>
+    <{if $pagenav_articles|default:''}>
+        <div class='xo-pagenav floatright'><{$pagenav_articles}></div>
         <div class='clear spacer'></div>
     <{/if}>
 <{else}>
@@ -66,8 +66,8 @@
         </tbody>
     </table>
     <div class='clear'>&nbsp;</div>
-    <{if $pagenav|default:''}>
-        <div class='xo-pagenav floatright'><{$pagenav|default:false}></div>
+    <{if $pagenav_testfields|default:''}>
+        <div class='xo-pagenav floatright'><{$pagenav_testfields}></div>
         <div class='clear spacer'></div>
     <{/if}>
 <{else}>

@@ -163,8 +163,9 @@ switch ($op) {
         $categoriesObj->setVar('cat_submitter', Request::getInt('cat_submitter'));
         // Insert Data
         if ($categoriesHandler->insert($categoriesObj)) {
+            $savedCatId = $catId > 0 ? $catId : $categoriesObj->getNewInsertedIdCategories();
             if ('' !== $uploaderErrors) {
-                \redirect_header('categories.php?op=edit&cat_id=' . $catId, 5, $uploaderErrors);
+                \redirect_header('categories.php?op=edit&cat_id=' . $savedCatId, 5, $uploaderErrors);
             } else {
                 \redirect_header('categories.php?op=list&amp;start=' . $start . '&amp;limit=' . $limit, 2, \_AM_WGTESTMB_FORM_OK);
             }

@@ -145,6 +145,7 @@ require_once __DIR__ . '/main.php';
 // Status
 \define('_AM_WGTESTMB_STATUS_NONE', 'No status');
 \define('_AM_WGTESTMB_STATUS_OFFLINE', 'Offline');
+\define('_AM_WGTESTMB_STATUS_ONLINE', 'Online');
 \define('_AM_WGTESTMB_STATUS_SUBMITTED', 'Submitted');
 \define('_AM_WGTESTMB_STATUS_APPROVED', 'Approved');
 \define('_AM_WGTESTMB_STATUS_BROKEN', 'Broken');
