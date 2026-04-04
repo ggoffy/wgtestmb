@@ -157,8 +157,6 @@ class Articles extends \XoopsObject
             $imageTray->addElement(new \XoopsFormLabel(\_AM_WGTESTMB_FORM_UPLOAD_SIZE, ($maxsize / 1048576) . ' '  . \_AM_WGTESTMB_FORM_UPLOAD_SIZE_MB));
             $imageTray->addElement(new \XoopsFormLabel(\_AM_WGTESTMB_FORM_UPLOAD_IMG_WIDTH, $helper->getConfig('maxwidth_image') . ' px'));
             $imageTray->addElement(new \XoopsFormLabel(\_AM_WGTESTMB_FORM_UPLOAD_IMG_HEIGHT, $helper->getConfig('maxheight_image') . ' px'));
-        } else {
-            $imageTray->addElement(new \XoopsFormHidden('art_img', $artImg));
         }
         $form->addElement($imageTray);
         // Form Select Status artStatus
@@ -211,13 +209,10 @@ class Articles extends \XoopsObject
             $groupsCanViewCheckbox = new \XoopsFormCheckBox(\_AM_WGTESTMB_PERMISSIONS_VIEW, 'groups_view_articles[]', $fullList);
         } else {
             $groupsIdsApprove = $grouppermHandler->getGroupIds('wgtestmb_approve_articles', $this->getVar('art_id'), $GLOBALS['xoopsModule']->getVar('mid'));
-            $groupsIdsApprove[] = \array_values($groupsIdsApprove);
             $groupsCanApproveCheckbox = new \XoopsFormCheckBox(\_AM_WGTESTMB_PERMISSIONS_APPROVE, 'groups_approve_articles[]', $groupsIdsApprove);
             $groupsIdsSubmit = $grouppermHandler->getGroupIds('wgtestmb_submit_articles', $this->getVar('art_id'), $GLOBALS['xoopsModule']->getVar('mid'));
-            $groupsIdsSubmit[] = \array_values($groupsIdsSubmit);
             $groupsCanSubmitCheckbox = new \XoopsFormCheckBox(\_AM_WGTESTMB_PERMISSIONS_SUBMIT, 'groups_submit_articles[]', $groupsIdsSubmit);
             $groupsIdsView = $grouppermHandler->getGroupIds('wgtestmb_view_articles', $this->getVar('art_id'), $GLOBALS['xoopsModule']->getVar('mid'));
-            $groupsIdsView[] = \array_values($groupsIdsView);
             $groupsCanViewCheckbox = new \XoopsFormCheckBox(\_AM_WGTESTMB_PERMISSIONS_VIEW, 'groups_view_articles[]', $groupsIdsView);
         }
         // To Approve

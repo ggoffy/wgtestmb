@@ -34,11 +34,11 @@ require_once \XOOPS_ROOT_PATH . '/modules/wgtestmb/include/common.php';
  */
 function b_wgtestmb_testtable1_show($options)
 {
-    $helper        = Helper::getInstance();
-    $block         = [];
-    $typeBlock     = $options[0];
-    $limit         = $options[1];
-    $lenghtTitle   = $options[2];
+    $helper      = Helper::getInstance();
+    $block       = [];
+    $typeBlock   = $options[0];
+    $limit       = $options[1];
+    $lenghtTitle = $options[2];
     \array_shift($options);
     \array_shift($options);
     \array_shift($options);

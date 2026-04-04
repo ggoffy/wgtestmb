@@ -157,83 +157,95 @@ switch ($op) {
         }
         $testfieldsObj->setVar('tf_urlfile', formatURL($_REQUEST['tf_urlfile']));
         // Set Var tf_urlfile
-        require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['tf_urlfile']['name'];
-        $imgNameDef     = Request::getString('tf_text');
-        $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/testfields/', 
+        $filename = $_FILES['tf_urlfile']['name'];
+        if ('' !== (string)$filename) {
+            require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
+            $imgNameDef = Request::getString('tf_text');
+            $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/testfields/', 
                                                     $helper->getConfig('mimetypes_file'), 
                                                     $helper->getConfig('maxsize_file'), null, null);
-        if ($uploader->fetchMedia($_POST['xoops_upload_file'][1])) {
-            $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
-            $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
-            $uploader->setPrefix($imgName);
-            if ($uploader->upload()) {
-                $testfieldsObj->setVar('tf_urlfile', $uploader->getSavedFileName());
+            if ($uploader->fetchMedia($_POST['xoops_upload_file'][1])) {
+                $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
+                $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
+                $uploader->setPrefix($imgName);
+                if ($uploader->upload()) {
+                    $testfieldsObj->setVar('tf_urlfile', $uploader->getSavedFileName());
+                } else {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
             } else {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
+                if ($filename > '') {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
+                $testfieldsObj->setVar('tf_urlfile', Request::getString('tf_urlfile'));
             }
         } else {
-            if ($filename > '') {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
-            }
             $testfieldsObj->setVar('tf_urlfile', Request::getString('tf_urlfile'));
         }
         // Set Var tf_uplimage
-        require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['tf_uplimage']['name'];
-        $imgMimetype    = $_FILES['tf_uplimage']['type'];
-        $imgNameDef     = Request::getString('tf_text');
-        $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_IMAGE_PATH . '/testfields/', 
+        $filename = $_FILES['tf_uplimage']['name'];
+        if ('' !== (string)$filename) {
+            require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
+            $imgMimetype    = $_FILES['tf_uplimage']['type'];
+            $imgNameDef     = Request::getString('tf_text');
+            $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_IMAGE_PATH . '/testfields/', 
                                                     $helper->getConfig('mimetypes_image'), 
                                                     $helper->getConfig('maxsize_image'), null, null);
-        if ($uploader->fetchMedia($_POST['xoops_upload_file'][2])) {
-            $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
-            $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
-            $uploader->setPrefix($imgName);
-            if ($uploader->upload()) {
-                $savedFilename = $uploader->getSavedFileName();
-                $maxwidth  = (int)$helper->getConfig('maxwidth_image');
-                $maxheight = (int)$helper->getConfig('maxheight_image');
-                if ($maxwidth > 0 && $maxheight > 0) {
+            if ($uploader->fetchMedia($_POST['xoops_upload_file'][2])) {
+                $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
+                $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
+                $uploader->setPrefix($imgName);
+                if ($uploader->upload()) {
+                    $savedFilename = $uploader->getSavedFileName();
+                    $maxwidth  = (int)$helper->getConfig('maxwidth_image');
+                    $maxheight = (int)$helper->getConfig('maxheight_image');
+                    if ($maxwidth > 0 && $maxheight > 0) {
                     // Resize image
-                    $imgHandler                = new Common\Resizer();
-                    $imgHandler->sourceFile    = \WGTESTMB_UPLOAD_IMAGE_PATH . '/testfields/' . $savedFilename;
-                    $imgHandler->endFile       = \WGTESTMB_UPLOAD_IMAGE_PATH . '/testfields/' . $savedFilename;
-                    $imgHandler->imageMimetype = $imgMimetype;
-                    $imgHandler->maxWidth      = $maxwidth;
-                    $imgHandler->maxHeight     = $maxheight;
-                    $result                    = $imgHandler->resizeImage();
+                        $imgHandler                = new Common\Resizer();
+                        $imgHandler->sourceFile    = \WGTESTMB_UPLOAD_IMAGE_PATH . '/testfields/' . $savedFilename;
+                        $imgHandler->endFile       = \WGTESTMB_UPLOAD_IMAGE_PATH . '/testfields/' . $savedFilename;
+                        $imgHandler->imageMimetype = $imgMimetype;
+                        $imgHandler->maxWidth      = $maxwidth;
+                        $imgHandler->maxHeight     = $maxheight;
+                        $result                    = $imgHandler->resizeImage();
+                    }
+                    $testfieldsObj->setVar('tf_uplimage', $savedFilename);
+                } else {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
                 }
-                $testfieldsObj->setVar('tf_uplimage', $savedFilename);
             } else {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
+                if ($filename > '') {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
+                $testfieldsObj->setVar('tf_uplimage', Request::getString('tf_uplimage'));
             }
         } else {
-            if ($filename > '') {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
-            }
             $testfieldsObj->setVar('tf_uplimage', Request::getString('tf_uplimage'));
         }
         // Set Var tf_uplfile
-        require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['tf_uplfile']['name'];
-        $imgNameDef     = Request::getString('tf_text');
-        $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/testfields/', 
+        $filename = $_FILES['tf_uplfile']['name'];
+        if ('' !== (string)$filename) {
+            require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
+            $imgNameDef = Request::getString('tf_text');
+            $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/testfields/', 
                                                     $helper->getConfig('mimetypes_file'), 
                                                     $helper->getConfig('maxsize_file'), null, null);
-        if ($uploader->fetchMedia($_POST['xoops_upload_file'][3])) {
-            $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
-            $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
-            $uploader->setPrefix($imgName);
-            if ($uploader->upload()) {
-                $testfieldsObj->setVar('tf_uplfile', $uploader->getSavedFileName());
+            if ($uploader->fetchMedia($_POST['xoops_upload_file'][3])) {
+                $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
+                $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
+                $uploader->setPrefix($imgName);
+                if ($uploader->upload()) {
+                    $testfieldsObj->setVar('tf_uplfile', $uploader->getSavedFileName());
+                } else {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
             } else {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
+                if ($filename > '') {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
+                $testfieldsObj->setVar('tf_uplfile', Request::getString('tf_uplfile'));
             }
         } else {
-            if ($filename > '') {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
-            }
             $testfieldsObj->setVar('tf_uplfile', Request::getString('tf_uplfile'));
         }
         $testfieldTextdateselectObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('tf_textdateselect'));
@@ -246,25 +258,29 @@ switch ($op) {
         }
         $testfieldsObj->setVar('tf_textdateselect', $testfieldTextdateselectObj->getTimestamp());
         // Set Var tf_selectfile
-        require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['tf_selectfile']['name'];
-        $imgNameDef     = Request::getString('tf_text');
-        $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/testfields/', 
+        $filename = $_FILES['tf_selectfile']['name'];
+        if ('' !== (string)$filename) {
+            require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
+            $imgNameDef = Request::getString('tf_text');
+            $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/testfields/', 
                                                     $helper->getConfig('mimetypes_file'), 
                                                     $helper->getConfig('maxsize_file'), null, null);
-        if ($uploader->fetchMedia($_POST['xoops_upload_file'][4])) {
-            $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
-            $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
-            $uploader->setPrefix($imgName);
-            if ($uploader->upload()) {
-                $testfieldsObj->setVar('tf_selectfile', $uploader->getSavedFileName());
+            if ($uploader->fetchMedia($_POST['xoops_upload_file'][4])) {
+                $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
+                $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
+                $uploader->setPrefix($imgName);
+                if ($uploader->upload()) {
+                    $testfieldsObj->setVar('tf_selectfile', $uploader->getSavedFileName());
+                } else {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
             } else {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
+                if ($filename > '') {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
+                $testfieldsObj->setVar('tf_selectfile', Request::getString('tf_selectfile'));
             }
         } else {
-            if ($filename > '') {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
-            }
             $testfieldsObj->setVar('tf_selectfile', Request::getString('tf_selectfile'));
         }
         $tfPassword = Request::getString('tf_password');
@@ -276,7 +292,7 @@ switch ($op) {
         $testfieldsObj->setVar('tf_radio', Request::getInt('tf_radio'));
         $testfieldsObj->setVar('tf_status', Request::getInt('tf_status'));
         $testfieldDatetimeArr = Request::getArray('tf_datetime');
-        if (!isset($testfieldDatetimeObj['date']) || !isset($testfieldDatetimeObj['time'])) {
+        if (!isset($testfieldDatetimeArr['date']) || !isset($testfieldDatetimeArr['time'])) {
             // Get Form
             $GLOBALS['xoopsTpl']->assign('error', \_MA_WGTESTMB_INVALID_DATE);
             $form = $testfieldsObj->getFormTestfields();

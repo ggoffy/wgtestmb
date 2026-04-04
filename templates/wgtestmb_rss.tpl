@@ -4,13 +4,13 @@
     <title><{$channel_title|escape:'html':'UTF-8'}></title>
     <link><{$channel_link|escape:'html':'UTF-8'}></link>
     <description><{$channel_desc|escape:'html':'UTF-8'}></description>
-    <lastBuildDate><{$channel_lastbuild}></lastBuildDate>
+    <lastBuildDate><{$channel_lastbuild|escape:'html':'UTF-8'}></lastBuildDate>
     <docs>https://backend.userland.com/rss/</docs>
-    <generator><{$channel_generator}></generator>
-    <category><{$channel_category}></category>
-    <managingEditor><{$channel_editor}></managingEditor>
-    <webMaster><{$channel_webmaster}></webMaster>
-    <language><{$channel_language}></language>
+    <generator><{$channel_generator|escape:'html':'UTF-8'}></generator>
+    <category><{$channel_category|escape:'html':'UTF-8'}></category>
+    <managingEditor><{$channel_editor|escape:'html':'UTF-8'}></managingEditor>
+    <webMaster><{$channel_webmaster|escape:'html':'UTF-8'}></webMaster>
+    <language><{$channel_language|escape:'html':'UTF-8'}></language>
     <{if $image_url != ""}>
     <image>
       <title><{$channel_title|escape:'html':'UTF-8'}></title>
@@ -25,7 +25,7 @@
       <title><{$item.title|escape:'html':'UTF-8'}></title>
       <link><{$item.link|escape:'html':'UTF-8'}></link>
       <description><{$item.description|escape:'html':'UTF-8'}></description>
-      <pubDate><{$item.pubdate}></pubDate>
+      <pubDate><{$item.pubdate|escape:'html':'UTF-8'}></pubDate>
       <guid><{$item.guid|escape:'html':'UTF-8'}></guid>
     </item>
     <{/foreach}>

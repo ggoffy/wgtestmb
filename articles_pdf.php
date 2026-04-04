@@ -50,6 +50,23 @@ if (!\is_object($articlesObj)) {
 $myts = MyTextSanitizer::getInstance();
 $pdfTpl->assign('wgtestmb_upload_url', \WGTESTMB_UPLOAD_URL);
 
+// Check permissions
+$currentuid = 0;
+if (isset($xoopsUser) && \is_object($xoopsUser)) {
+    $currentuid = $xoopsUser->uid();
+}
+$grouppermHandler = \xoops_getHandler('groupperm');
+$memberHandler = \xoops_getHandler('member');
+if ($currentuid === 0) {
+    $my_group_ids = [\XOOPS_GROUP_ANONYMOUS];
+} else {
+    $my_group_ids = $memberHandler->getGroupsByUser($currentuid);
+}
+// Verify permissions
+if (!$grouppermHandler->checkRight('wgtestmb_view_articles', $artId, $my_group_ids, $GLOBALS['xoopsModule']->getVar('mid'))) {
+    \redirect_header(\WGTESTMB_URL . '/index.php', 3, \_NOPERM);
+    exit();
+}
 // Set defaults
 $pdfFilename = 'articles.pdf';
 $content     = '';
@@ -90,7 +107,7 @@ $pdf->setPrintFooter(true);
 // Set document information
 $pdf->SetCreator($pdfData['creator']);
 $pdf->SetAuthor($pdfData['author']);
-$pdf->SetTitle($title);
+$pdf->SetTitle($pdfData['title']);
 $pdf->SetKeywords($pdfData['keywords']);
 // Set default header data
 $pdf->setHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, WGTESTMB_HEADER_TITLE, WGTESTMB_HEADER_STRING);

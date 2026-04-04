@@ -6,7 +6,7 @@
     <span class='col-sm-9 justify'><{$testtable1.date_text|default:''|escape:'html'}></span>
     <span class='col-sm-9 justify'><{$testtable1.comments|default:''|escape:'html'}></span>
 </div>
-<div class='panel-foot'>
+<div class='panel-footer'>
     <div class='col-sm-12 right'>
         <{if $showItem|default:false}>
             <a class='btn btn-success right' href='testtable1.php?op=list&amp;start=<{$start|default:0}>&amp;limit=<{$limit|default:0}>#tt1Id_<{$testtable1.id|default:false}>' title='<{$smarty.const._MA_WGTESTMB_TESTTABLE1_LIST}>'><{$smarty.const._MA_WGTESTMB_TESTTABLE1_LIST}></a>

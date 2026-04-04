@@ -117,62 +117,70 @@ switch ($op) {
         $articlesObj->setVar('art_title', Request::getString('art_title'));
         $articlesObj->setVar('art_descr', Request::getText('art_descr'));
         // Set Var art_img
-        require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['art_img']['name'];
-        $imgMimetype    = $_FILES['art_img']['type'];
-        $imgNameDef     = Request::getString('art_title');
-        $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_IMAGE_PATH . '/articles/', 
+        $filename = $_FILES['art_img']['name'];
+        if ('' !== (string)$filename) {
+            require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
+            $imgMimetype    = $_FILES['art_img']['type'];
+            $imgNameDef     = Request::getString('art_title');
+            $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_IMAGE_PATH . '/articles/', 
                                                     $helper->getConfig('mimetypes_image'), 
                                                     $helper->getConfig('maxsize_image'), null, null);
-        if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
-            $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
-            $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
-            $uploader->setPrefix($imgName);
-            if ($uploader->upload()) {
-                $savedFilename = $uploader->getSavedFileName();
-                $maxwidth  = (int)$helper->getConfig('maxwidth_image');
-                $maxheight = (int)$helper->getConfig('maxheight_image');
-                if ($maxwidth > 0 && $maxheight > 0) {
+            if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
+                $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
+                $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
+                $uploader->setPrefix($imgName);
+                if ($uploader->upload()) {
+                    $savedFilename = $uploader->getSavedFileName();
+                    $maxwidth  = (int)$helper->getConfig('maxwidth_image');
+                    $maxheight = (int)$helper->getConfig('maxheight_image');
+                    if ($maxwidth > 0 && $maxheight > 0) {
                     // Resize image
-                    $imgHandler                = new Common\Resizer();
-                    $imgHandler->sourceFile    = \WGTESTMB_UPLOAD_IMAGE_PATH . '/articles/' . $savedFilename;
-                    $imgHandler->endFile       = \WGTESTMB_UPLOAD_IMAGE_PATH . '/articles/' . $savedFilename;
-                    $imgHandler->imageMimetype = $imgMimetype;
-                    $imgHandler->maxWidth      = $maxwidth;
-                    $imgHandler->maxHeight     = $maxheight;
-                    $result                    = $imgHandler->resizeImage();
+                        $imgHandler                = new Common\Resizer();
+                        $imgHandler->sourceFile    = \WGTESTMB_UPLOAD_IMAGE_PATH . '/articles/' . $savedFilename;
+                        $imgHandler->endFile       = \WGTESTMB_UPLOAD_IMAGE_PATH . '/articles/' . $savedFilename;
+                        $imgHandler->imageMimetype = $imgMimetype;
+                        $imgHandler->maxWidth      = $maxwidth;
+                        $imgHandler->maxHeight     = $maxheight;
+                        $result                    = $imgHandler->resizeImage();
+                    }
+                    $articlesObj->setVar('art_img', $savedFilename);
+                } else {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
                 }
-                $articlesObj->setVar('art_img', $savedFilename);
             } else {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
+                if ($filename > '') {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
+                $articlesObj->setVar('art_img', Request::getString('art_img'));
             }
         } else {
-            if ($filename > '') {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
-            }
             $articlesObj->setVar('art_img', Request::getString('art_img'));
         }
         $articlesObj->setVar('art_status', Request::getInt('art_status'));
         // Set Var art_file
-        require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['art_file']['name'];
-        $imgNameDef     = Request::getString('art_title');
-        $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/articles/', 
+        $filename = $_FILES['art_file']['name'];
+        if ('' !== (string)$filename) {
+            require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
+            $imgNameDef = Request::getString('art_title');
+            $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/articles/', 
                                                     $helper->getConfig('mimetypes_file'), 
                                                     $helper->getConfig('maxsize_file'), null, null);
-        if ($uploader->fetchMedia($_POST['xoops_upload_file'][1])) {
-            $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
-            $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
-            $uploader->setPrefix($imgName);
-            if ($uploader->upload()) {
-                $articlesObj->setVar('art_file', $uploader->getSavedFileName());
+            if ($uploader->fetchMedia($_POST['xoops_upload_file'][1])) {
+                $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
+                $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
+                $uploader->setPrefix($imgName);
+                if ($uploader->upload()) {
+                    $articlesObj->setVar('art_file', $uploader->getSavedFileName());
+                } else {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
             } else {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
+                if ($filename > '') {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
+                $articlesObj->setVar('art_file', Request::getString('art_file'));
             }
         } else {
-            if ($filename > '') {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
-            }
             $articlesObj->setVar('art_file', Request::getString('art_file'));
         }
         $articlesObj->setVar('art_ratings', Request::getFloat('art_ratings'));

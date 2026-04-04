@@ -115,39 +115,43 @@ switch ($op) {
         $uploaderErrors = '';
         $categoriesObj->setVar('cat_name', Request::getString('cat_name'));
         // Set Var cat_logo
-        require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
-        $filename       = $_FILES['cat_logo']['name'];
-        $imgMimetype    = $_FILES['cat_logo']['type'];
-        $imgNameDef     = Request::getString('cat_name');
-        $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_IMAGE_PATH . '/categories/', 
+        $filename = $_FILES['cat_logo']['name'];
+        if ('' !== (string)$filename) {
+            require_once \XOOPS_ROOT_PATH . '/class/uploader.php';
+            $imgMimetype    = $_FILES['cat_logo']['type'];
+            $imgNameDef     = Request::getString('cat_name');
+            $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_IMAGE_PATH . '/categories/', 
                                                     $helper->getConfig('mimetypes_image'), 
                                                     $helper->getConfig('maxsize_image'), null, null);
-        if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
-            $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
-            $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
-            $uploader->setPrefix($imgName);
-            if ($uploader->upload()) {
-                $savedFilename = $uploader->getSavedFileName();
-                $maxwidth  = (int)$helper->getConfig('maxwidth_image');
-                $maxheight = (int)$helper->getConfig('maxheight_image');
-                if ($maxwidth > 0 && $maxheight > 0) {
+            if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
+                $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
+                $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
+                $uploader->setPrefix($imgName);
+                if ($uploader->upload()) {
+                    $savedFilename = $uploader->getSavedFileName();
+                    $maxwidth  = (int)$helper->getConfig('maxwidth_image');
+                    $maxheight = (int)$helper->getConfig('maxheight_image');
+                    if ($maxwidth > 0 && $maxheight > 0) {
                     // Resize image
-                    $imgHandler                = new Common\Resizer();
-                    $imgHandler->sourceFile    = \WGTESTMB_UPLOAD_IMAGE_PATH . '/categories/' . $savedFilename;
-                    $imgHandler->endFile       = \WGTESTMB_UPLOAD_IMAGE_PATH . '/categories/' . $savedFilename;
-                    $imgHandler->imageMimetype = $imgMimetype;
-                    $imgHandler->maxWidth      = $maxwidth;
-                    $imgHandler->maxHeight     = $maxheight;
-                    $result                    = $imgHandler->resizeImage();
+                        $imgHandler                = new Common\Resizer();
+                        $imgHandler->sourceFile    = \WGTESTMB_UPLOAD_IMAGE_PATH . '/categories/' . $savedFilename;
+                        $imgHandler->endFile       = \WGTESTMB_UPLOAD_IMAGE_PATH . '/categories/' . $savedFilename;
+                        $imgHandler->imageMimetype = $imgMimetype;
+                        $imgHandler->maxWidth      = $maxwidth;
+                        $imgHandler->maxHeight     = $maxheight;
+                        $result                    = $imgHandler->resizeImage();
+                    }
+                    $categoriesObj->setVar('cat_logo', $savedFilename);
+                } else {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
                 }
-                $categoriesObj->setVar('cat_logo', $savedFilename);
             } else {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
+                if ($filename > '') {
+                    $uploaderErrors .= '<br>' . $uploader->getErrors();
+                }
+                $categoriesObj->setVar('cat_logo', Request::getString('cat_logo'));
             }
         } else {
-            if ($filename > '') {
-                $uploaderErrors .= '<br>' . $uploader->getErrors();
-            }
             $categoriesObj->setVar('cat_logo', Request::getString('cat_logo'));
         }
         $categoryCreatedObj = \DateTime::createFromFormat(\_SHORTDATESTRING, Request::getString('cat_created'));

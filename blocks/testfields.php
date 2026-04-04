@@ -34,13 +34,12 @@ require_once \XOOPS_ROOT_PATH . '/modules/wgtestmb/include/common.php';
  */
 function b_wgtestmb_testfields_show($options)
 {
-    $helper        = Helper::getInstance();
-    $utility       = new \XoopsModules\Wgtestmb\Utility();
-    $editorMaxchar = $helper->getConfig('editor_maxchar');
-    $block         = [];
-    $typeBlock     = $options[0];
-    $limit         = $options[1];
-    $lenghtTitle   = $options[2];
+    $helper      = Helper::getInstance();
+    $utility     = new \XoopsModules\Wgtestmb\Utility();
+    $block       = [];
+    $typeBlock   = $options[0];
+    $limit       = $options[1];
+    $lenghtTitle = $options[2];
     \array_shift($options);
     \array_shift($options);
     \array_shift($options);

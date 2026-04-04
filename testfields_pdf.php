@@ -50,6 +50,23 @@ if (!\is_object($testfieldsObj)) {
 $myts = MyTextSanitizer::getInstance();
 $pdfTpl->assign('wgtestmb_upload_url', \WGTESTMB_UPLOAD_URL);
 
+// Check permissions
+$currentuid = 0;
+if (isset($xoopsUser) && \is_object($xoopsUser)) {
+    $currentuid = $xoopsUser->uid();
+}
+$grouppermHandler = \xoops_getHandler('groupperm');
+$memberHandler = \xoops_getHandler('member');
+if ($currentuid === 0) {
+    $my_group_ids = [\XOOPS_GROUP_ANONYMOUS];
+} else {
+    $my_group_ids = $memberHandler->getGroupsByUser($currentuid);
+}
+// Verify permissions
+if (!$grouppermHandler->checkRight('wgtestmb_view_testfields', $tfId, $my_group_ids, $GLOBALS['xoopsModule']->getVar('mid'))) {
+    \redirect_header(\WGTESTMB_URL . '/index.php', 3, \_NOPERM);
+    exit();
+}
 // Set defaults
 $pdfFilename = 'testfields.pdf';
 $content     = '';
@@ -59,6 +76,8 @@ $content .= \strip_tags($testfieldsObj->getVar('tf_textarea'));
 $content .= \strip_tags($testfieldsObj->getVar('tf_dhtml'));
 $pdfData['author']   = \XoopsUser::getUnameFromId($testfieldsObj->getVar('tf_user'));
 $pdfData['date']     = \formatTimestamp($testfieldsObj->getVar('tf_textdateselect'), 's');
+$pdfData['title']    = $testfieldsObj->getVar('tf_text');
+$pdfData['subject']  = $testfieldsObj->getVar('tf_text');
 $pdfData['content']  = $myts->undoHtmlSpecialChars($content);
 $pdfData['fontname'] = PDF_FONT_NAME_MAIN;
 $pdfData['fontsize'] = PDF_FONT_SIZE_MAIN;
@@ -89,7 +108,7 @@ $pdf->setPrintFooter(true);
 // Set document information
 $pdf->SetCreator($pdfData['creator']);
 $pdf->SetAuthor($pdfData['author']);
-$pdf->SetTitle($title);
+$pdf->SetTitle($pdfData['title']);
 $pdf->SetKeywords($pdfData['keywords']);
 // Set default header data
 $pdf->setHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, WGTESTMB_HEADER_TITLE, WGTESTMB_HEADER_STRING);

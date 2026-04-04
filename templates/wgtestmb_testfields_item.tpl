@@ -23,7 +23,7 @@
     <span class='col-sm-9 justify'><{$testfield.combobox|default:''|escape:'html'}></span>
     <span class='col-sm-9 justify'><{$testfield.ratings|default:''|escape:'html'}></span>
 </div>
-<div class='panel-foot'>
+<div class='panel-footer'>
     <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_TESTFIELD_COMMENTS}>: <{$testfield.comments|default:''|escape:'html'}></span>
     <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_TESTFIELD_IP}>: <{$testfield.ip|default:''|escape:'html'}></span>
     <span class='block-pie justify'><{$smarty.const._MA_WGTESTMB_TESTFIELD_READS}>: <{$testfield.reads|default:''|escape:'html'}></span>

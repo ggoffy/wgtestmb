@@ -124,13 +124,15 @@ class Categories extends \XoopsObject
             $imageTray->addElement(new \XoopsFormLabel(\_AM_WGTESTMB_FORM_UPLOAD_SIZE, ($maxsize / 1048576) . ' '  . \_AM_WGTESTMB_FORM_UPLOAD_SIZE_MB));
             $imageTray->addElement(new \XoopsFormLabel(\_AM_WGTESTMB_FORM_UPLOAD_IMG_WIDTH, $helper->getConfig('maxwidth_image') . ' px'));
             $imageTray->addElement(new \XoopsFormLabel(\_AM_WGTESTMB_FORM_UPLOAD_IMG_HEIGHT, $helper->getConfig('maxheight_image') . ' px'));
-        } else {
-            $imageTray->addElement(new \XoopsFormHidden('cat_logo', $catLogo));
         }
         $form->addElement($imageTray);
         // Form Text Date Select catCreated
         $catCreated = $this->isNew() ? \time() : $this->getVar('cat_created');
         $form->addElement(new \XoopsFormTextDateSelect(\_AM_WGTESTMB_CATEGORY_CREATED, 'cat_created', '', $catCreated), true);
+        // Form Select User catSubmitter
+        $uidCurrent = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->uid() : 0;
+        $catSubmitter = $this->isNew() ? $uidCurrent : $this->getVar('cat_submitter');
+        $form->addElement(new \XoopsFormSelectUser(\_AM_WGTESTMB_CATEGORY_SUBMITTER, 'cat_submitter', false, $catSubmitter));
         // To Save
         $form->addElement(new \XoopsFormHidden('op', 'save'));
         $form->addElement(new \XoopsFormHidden('start', $this->start));

@@ -212,8 +212,6 @@ class Testfields extends \XoopsObject
             $imageTray->addElement(new \XoopsFormLabel(\_AM_WGTESTMB_FORM_UPLOAD_SIZE, ($maxsize / 1048576) . ' '  . \_AM_WGTESTMB_FORM_UPLOAD_SIZE_MB));
             $imageTray->addElement(new \XoopsFormLabel(\_AM_WGTESTMB_FORM_UPLOAD_IMG_WIDTH, $helper->getConfig('maxwidth_image') . ' px'));
             $imageTray->addElement(new \XoopsFormLabel(\_AM_WGTESTMB_FORM_UPLOAD_IMG_HEIGHT, $helper->getConfig('maxheight_image') . ' px'));
-        } else {
-            $imageTray->addElement(new \XoopsFormHidden('tf_uplimage', $tfUplimage));
         }
         $form->addElement($imageTray);
         // Form File: Upload tfUplfile
@@ -327,13 +325,10 @@ class Testfields extends \XoopsObject
             $groupsCanViewCheckbox = new \XoopsFormCheckBox(\_AM_WGTESTMB_PERMISSIONS_VIEW, 'groups_view_testfields[]', $fullList);
         } else {
             $groupsIdsApprove = $grouppermHandler->getGroupIds('wgtestmb_approve_testfields', $this->getVar('tf_id'), $GLOBALS['xoopsModule']->getVar('mid'));
-            $groupsIdsApprove[] = \array_values($groupsIdsApprove);
             $groupsCanApproveCheckbox = new \XoopsFormCheckBox(\_AM_WGTESTMB_PERMISSIONS_APPROVE, 'groups_approve_testfields[]', $groupsIdsApprove);
             $groupsIdsSubmit = $grouppermHandler->getGroupIds('wgtestmb_submit_testfields', $this->getVar('tf_id'), $GLOBALS['xoopsModule']->getVar('mid'));
-            $groupsIdsSubmit[] = \array_values($groupsIdsSubmit);
             $groupsCanSubmitCheckbox = new \XoopsFormCheckBox(\_AM_WGTESTMB_PERMISSIONS_SUBMIT, 'groups_submit_testfields[]', $groupsIdsSubmit);
             $groupsIdsView = $grouppermHandler->getGroupIds('wgtestmb_view_testfields', $this->getVar('tf_id'), $GLOBALS['xoopsModule']->getVar('mid'));
-            $groupsIdsView[] = \array_values($groupsIdsView);
             $groupsCanViewCheckbox = new \XoopsFormCheckBox(\_AM_WGTESTMB_PERMISSIONS_VIEW, 'groups_view_testfields[]', $groupsIdsView);
         }
         // To Approve

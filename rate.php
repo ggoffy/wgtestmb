@@ -116,27 +116,20 @@ switch ($op) {
         if ($ratingsHandler->insert($ratingsObj)) {
             unset($ratingsObj);
             // Calc average rating value
-            $nb_ratings     = 0;
-            $avg_rate_value = 0;
-            $current_rating = 0;
-            $crRatings = new \CriteriaCompo();
-            $crRatings->add(new \Criteria('rate_source', $source));
-            $crRatings->add(new \Criteria('rate_itemid', $itemid));
-            $ratingsCount = $ratingsHandler->getCount($crRatings);
-            $ratingsAll = $ratingsHandler->getAll($crRatings);
-            foreach (\array_keys($ratingsAll) as $i) {
-                $current_rating += $ratingsAll[$i]->getVar('rate_value');
-            }
-            unset($ratingsAll);
-            if ($ratingsCount > 0) {
-                $avg_rate_value = number_format($current_rating / $ratingsCount, 2);
-            }
-            // Update related table
             if (Constants::TABLE_ARTICLES === $source) {
-                $articlesObj = $articlesHandler->get($itemid);
-                $articlesObj->setVar('art_ratings', $avg_rate_value);
-                $articlesObj->setVar('art_votes', $ratingsCount);
-                if ($articlesHandler->insert($articlesObj)) {
+                $sql = '
+                    UPDATE ' . $GLOBALS['xoopsDB']->prefix('articles') . ' t
+                    LEFT JOIN (
+                        SELECT
+                            rate_itemid, rate_source, COUNT(*) AS votes, ROUND(AVG(rate_value), 2) AS avg_rating
+                        FROM ' . $GLOBALS['xoopsDB']->prefix('ratings') . '
+                        GROUP BY rate_itemid, rate_source
+                    ) r ON r.rate_itemid = t.art_id and r.rate_source = ' . $source . '
+                    SET
+                        t.art_votes = COALESCE(r.votes, 0),
+                        t.art_ratings = COALESCE(r.avg_rating, 0),
+                    WHERE t.art_id = ' . $itemid;
+                if ($GLOBALS['xoopsDB']->queryF($sql)) {
                     \redirect_header($redir, 2, \_MA_WGTESTMB_RATING_VOTE_THANKS);
                 } else {
                     \redirect_header('articles.php', 3, \_MA_WGTESTMB_RATING_ERROR1);
@@ -144,10 +137,19 @@ switch ($op) {
                 unset($articlesObj);
             }
             if (Constants::TABLE_TESTFIELDS === $source) {
-                $testfieldsObj = $testfieldsHandler->get($itemid);
-                $testfieldsObj->setVar('tf_ratings', $avg_rate_value);
-                $testfieldsObj->setVar('tf_votes', $ratingsCount);
-                if ($testfieldsHandler->insert($testfieldsObj)) {
+                $sql = '
+                    UPDATE ' . $GLOBALS['xoopsDB']->prefix('testfields') . ' t
+                    LEFT JOIN (
+                        SELECT
+                            rate_itemid, rate_source, COUNT(*) AS votes, ROUND(AVG(rate_value), 2) AS avg_rating
+                        FROM ' . $GLOBALS['xoopsDB']->prefix('ratings') . '
+                        GROUP BY rate_itemid, rate_source
+                    ) r ON r.rate_itemid = t.tf_id and r.rate_source = ' . $source . '
+                    SET
+                        t.tf_votes = COALESCE(r.votes, 0),
+                        t.tf_ratings = COALESCE(r.avg_rating, 0),
+                    WHERE t.tf_id = ' . $itemid;
+                if ($GLOBALS['xoopsDB']->queryF($sql)) {
                     \redirect_header($redir, 2, \_MA_WGTESTMB_RATING_VOTE_THANKS);
                 } else {
                     \redirect_header('testfields.php', 3, \_MA_WGTESTMB_RATING_ERROR1);
@@ -155,7 +157,7 @@ switch ($op) {
                 unset($testfieldsObj);
             }
 
-            \redirect_header('index.php', 2, \_MA_WGTESTMB_RATING_VOTE_THANKS);
+            \redirect_header('index.php', 2, \_MA_WGTESTMB_INVALID_PARAM);
         }
         // Get Error
         echo 'Error: ' . $ratingsObj->getHtmlErrors();

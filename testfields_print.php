@@ -52,7 +52,7 @@ if (!\is_object($testfieldsObj)) {
     \redirect_header('testfields.php', 3, \_MA_WGTESTMB_INVALID_PARAM);
 }
 // Verify permissions
-if (!$grouppermHandler->checkRight('wgtestmb_view', $testfieldsObj->getVar('tf_id'), $my_group_ids, $GLOBALS['xoopsModule']->getVar('mid'))) {
+if (!$grouppermHandler->checkRight('wgtestmb_view_testfields', $testfieldsObj->getVar('tf_id'), $my_group_ids, $GLOBALS['xoopsModule']->getVar('mid'))) {
     \redirect_header(\WGTESTMB_URL . '/index.php', 3, \_NOPERM);
     exit();
 }
