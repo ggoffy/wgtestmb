@@ -137,7 +137,7 @@ switch ($op) {
         } else {
             $testfieldsObj->setVar('tf_imagelist', Request::getString('tf_imagelist'));
         }
-        $testfieldsObj->setVar('tf_urlfile', formatURL($_REQUEST['tf_urlfile']));
+        $tfUrlfile = formatURL((string)($_REQUEST['tf_urlfile'] ?? ''));
         // Set Var tf_urlfile
         $filename = $_FILES['tf_urlfile']['name'];
         if ('' !== (string)$filename) {
@@ -146,7 +146,7 @@ switch ($op) {
             $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/testfields/', 
                                                     $helper->getConfig('mimetypes_file'), 
                                                     $helper->getConfig('maxsize_file'), null, null);
-            if ($uploader->fetchMedia($_POST['xoops_upload_file'][1])) {
+            if (isset($_POST['xoops_upload_file'][1]) && $uploader->fetchMedia($_POST['xoops_upload_file'][1])) {
                 $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
                 $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
                 $uploader->setPrefix($imgName);
@@ -159,10 +159,10 @@ switch ($op) {
                 if ($filename > '') {
                     $uploaderErrors .= '<br>' . $uploader->getErrors();
                 }
-                $testfieldsObj->setVar('tf_urlfile', Request::getString('tf_urlfile'));
+                $testfieldsObj->setVar('tf_urlfile', $tfUrlfile);
             }
         } else {
-            $testfieldsObj->setVar('tf_urlfile', Request::getString('tf_urlfile'));
+            $testfieldsObj->setVar('tf_urlfile', $tfUrlfile);
         }
         // Set Var tf_uplimage
         $filename = $_FILES['tf_uplimage']['name'];
@@ -173,7 +173,7 @@ switch ($op) {
             $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_IMAGE_PATH . '/testfields/', 
                                                     $helper->getConfig('mimetypes_image'), 
                                                     $helper->getConfig('maxsize_image'), null, null);
-            if ($uploader->fetchMedia($_POST['xoops_upload_file'][2])) {
+            if (isset($_POST['xoops_upload_file'][2]) && $uploader->fetchMedia($_POST['xoops_upload_file'][2])) {
                 $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
                 $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
                 $uploader->setPrefix($imgName);
@@ -212,7 +212,7 @@ switch ($op) {
             $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/testfields/', 
                                                     $helper->getConfig('mimetypes_file'), 
                                                     $helper->getConfig('maxsize_file'), null, null);
-            if ($uploader->fetchMedia($_POST['xoops_upload_file'][3])) {
+            if (isset($_POST['xoops_upload_file'][3]) && $uploader->fetchMedia($_POST['xoops_upload_file'][3])) {
                 $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
                 $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
                 $uploader->setPrefix($imgName);
@@ -247,7 +247,7 @@ switch ($op) {
             $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/testfields/', 
                                                     $helper->getConfig('mimetypes_file'), 
                                                     $helper->getConfig('maxsize_file'), null, null);
-            if ($uploader->fetchMedia($_POST['xoops_upload_file'][4])) {
+            if (isset($_POST['xoops_upload_file'][4]) && $uploader->fetchMedia($_POST['xoops_upload_file'][4])) {
                 $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
                 $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
                 $uploader->setPrefix($imgName);

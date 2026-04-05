@@ -130,10 +130,12 @@ if ('cn' == _LANGCODE) {
     $pdf->setFooterFont([PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA]);
 }
 // Set some language-dependent strings (optional)
-$lang = \XOOPS_ROOT_PATH.'/Frameworks/tcpdf/lang/eng.php';
-if (@\file_exists($lang)) {
-    require_once $lang;
-    $pdf->setLanguageArray($lang);
+$langFile = \XOOPS_ROOT_PATH.'/Frameworks/tcpdf/lang/eng.php';
+if (@\file_exists($langFile)) {
+    require_once $langFile;
+    if (isset($l) && \is_array($l)) {
+        $pdf->setLanguageArray($l);
+    }
 }
 // Add Page document
 $pdf->AddPage();

@@ -118,11 +118,11 @@ switch ($op) {
             // Calc average rating value
             if (Constants::TABLE_ARTICLES === $source) {
                 $sql = '
-                    UPDATE ' . $GLOBALS['xoopsDB']->prefix('articles') . ' t
+                    UPDATE ' . $GLOBALS['xoopsDB']->prefix('wgtestmb_articles') . ' t
                     LEFT JOIN (
                         SELECT
                             rate_itemid, rate_source, COUNT(*) AS votes, ROUND(AVG(rate_value), 2) AS avg_rating
-                        FROM ' . $GLOBALS['xoopsDB']->prefix('ratings') . '
+                        FROM ' . $GLOBALS['xoopsDB']->prefix('wgtestmb_ratings') . '
                         GROUP BY rate_itemid, rate_source
                     ) r ON r.rate_itemid = t.art_id and r.rate_source = ' . $source . '
                     SET
@@ -138,11 +138,11 @@ switch ($op) {
             }
             if (Constants::TABLE_TESTFIELDS === $source) {
                 $sql = '
-                    UPDATE ' . $GLOBALS['xoopsDB']->prefix('testfields') . ' t
+                    UPDATE ' . $GLOBALS['xoopsDB']->prefix('wgtestmb_testfields') . ' t
                     LEFT JOIN (
                         SELECT
                             rate_itemid, rate_source, COUNT(*) AS votes, ROUND(AVG(rate_value), 2) AS avg_rating
-                        FROM ' . $GLOBALS['xoopsDB']->prefix('ratings') . '
+                        FROM ' . $GLOBALS['xoopsDB']->prefix('wgtestmb_ratings') . '
                         GROUP BY rate_itemid, rate_source
                     ) r ON r.rate_itemid = t.tf_id and r.rate_source = ' . $source . '
                     SET

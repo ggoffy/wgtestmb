@@ -99,7 +99,7 @@ function b_wgtestmb_testfields_show($options)
              *     }
              *     $block[$i]['title'] =  $myTitle;
              */
-            $block[$i]['id']    = $testfields['tf_id'];
+            $block[$i]['id']    = $testfields['id'];
             $block[$i]['text']  = $testfields['text'];
         }
     }

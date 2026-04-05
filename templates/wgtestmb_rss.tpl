@@ -5,7 +5,7 @@
     <link><{$channel_link|escape:'html':'UTF-8'}></link>
     <description><{$channel_desc|escape:'html':'UTF-8'}></description>
     <lastBuildDate><{$channel_lastbuild|escape:'html':'UTF-8'}></lastBuildDate>
-    <docs>https://backend.userland.com/rss/</docs>
+    <docs><{$docs|escape:'html':'UTF-8'}></docs>
     <generator><{$channel_generator|escape:'html':'UTF-8'}></generator>
     <category><{$channel_category|escape:'html':'UTF-8'}></category>
     <managingEditor><{$channel_editor|escape:'html':'UTF-8'}></managingEditor>

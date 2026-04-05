@@ -99,7 +99,7 @@ function b_wgtestmb_articles_show($options)
              *     }
              *     $block[$i]['title'] =  $myTitle;
              */
-            $block[$i]['id']              = $articles['art_id'];
+            $block[$i]['id']              = $articles['id'];
             $block[$i]['cat']             = $articles['cat'];
             $block[$i]['title']           = $articles['title'];
             $block[$i]['descr_text']      = $articles['descr_text'];

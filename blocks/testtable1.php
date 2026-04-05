@@ -96,7 +96,7 @@ function b_wgtestmb_testtable1_show($options)
              *     }
              *     $block[$i]['title'] =  $myTitle;
              */
-            $block[$i]['id']        = $testtable1['tt1_id'];
+            $block[$i]['id']        = $testtable1['id'];
             $block[$i]['name']      = $testtable1['name'];
             $block[$i]['date_text'] = $testtable1['date_text'];
             $block[$i]['comments']  = $testtable1['comments'];

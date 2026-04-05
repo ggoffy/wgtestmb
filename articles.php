@@ -136,7 +136,7 @@ switch ($op) {
             $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_IMAGE_PATH . '/articles/', 
                                                     $helper->getConfig('mimetypes_image'), 
                                                     $helper->getConfig('maxsize_image'), null, null);
-            if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
+            if (isset($_POST['xoops_upload_file'][0]) && $uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
                 $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
                 $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
                 $uploader->setPrefix($imgName);
@@ -176,7 +176,7 @@ switch ($op) {
             $uploader = new \XoopsMediaUploader(\WGTESTMB_UPLOAD_FILES_PATH . '/articles/', 
                                                     $helper->getConfig('mimetypes_file'), 
                                                     $helper->getConfig('maxsize_file'), null, null);
-            if ($uploader->fetchMedia($_POST['xoops_upload_file'][1])) {
+            if (isset($_POST['xoops_upload_file'][1]) && $uploader->fetchMedia($_POST['xoops_upload_file'][1])) {
                 $extension = \pathinfo($filename, \PATHINFO_EXTENSION);
                 $imgName = \str_replace(' ', '', $imgNameDef) . '.' . $extension;
                 $uploader->setPrefix($imgName);

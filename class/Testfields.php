@@ -311,6 +311,7 @@ class Testfields extends \XoopsObject
         $form->addElement(new \XoopsFormText(\_AM_WGTESTMB_TESTFIELD_UUID, 'tf_uuid', 50, 150, $tfUuid), true);
         // Form Text IP tfIp
         $tfIp = $_SERVER['REMOTE_ADDR'];
+        $tfIp = $this->isNew() ? ($_SERVER['REMOTE_ADDR'] ?? '') : $this->getVar('tf_ip');
         $form->addElement(new \XoopsFormText(\_AM_WGTESTMB_TESTFIELD_IP, 'tf_ip', 20, 150, $tfIp));
         // Form Text tfReads
         $form->addElement(new \XoopsFormText(\_AM_WGTESTMB_TESTFIELD_READS, 'tf_reads', 50, 255, $this->getVar('tf_reads')));
